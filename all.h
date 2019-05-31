@@ -1,4 +1,5 @@
 #include <curl/curl.h>
+#include <json.h>
 #include <errno.h>
 #include <math.h>
 #include <stdio.h>

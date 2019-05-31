@@ -1,7 +1,7 @@
 P=curlrest
 CC=gcc
-CFLAGS=-std=gnu11 -pedantic -Wall -O0 -g `pkg-config --cflags libcurl json-c`
+CFLAGS=`pkg-config --cflags json-c glib-2.0 readline libuv libcurl` -std=gnu11 -pedantic -Wall -O0 -g
 OBJECTS=
-LDLIBS=`pkg-config --libs libcurl json-c`
+LDLIBS=`pkg-config --libs   json-c glib-2.0 readline libuv libcurl`
 $(P): $(OBJECTS)
 

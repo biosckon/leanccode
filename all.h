@@ -1,3 +1,4 @@
+#include <avro.h>
 #include <assert.h>
 #include <curl/curl.h>
 #include <curses.h>

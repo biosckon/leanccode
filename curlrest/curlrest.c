@@ -11,11 +11,27 @@ typedef struct {
 } mem_struct;
 
 void procJSON(mem_struct * buf) {
+    json_t *root;
+    json_error_t err;
 
-    struct json_object *jobj = json_tokener_parse(buf->memory);
+    root = json_loads(buf->memory, 0, &err);
+    if (!root) {
+        fprintf(stderr, "error: on line %d: %s\n",
+                err.line, err.text);
+        return;
+    }
 
-    printf("%s\n", json_object_to_json_string_ext(jobj,
-            JSON_C_TO_STRING_SPACED | JSON_C_TO_STRING_PRETTY));
+    // can free buf->memory if want to
+
+    for (int i = 0; i < json_array_size(root); i += 1) {
+        json_t *data = json_array_get(root, i);
+        json_t *ts = json_object_get(data, "timestamp");
+        json_t *etim = json_object_get(data, "ETIM");
+        printf("TS: %13.0f; ETIM: %10.5f\n", 
+            json_real_value(ts),
+            json_real_value(etim)
+        );
+    }
 }
 
 size_t writecb(char *content, size_t size, size_t nmemb, void *userp) {
